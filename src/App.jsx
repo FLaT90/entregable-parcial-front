@@ -6,6 +6,7 @@ function App() {
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [error, setError] = useState('');
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -23,25 +24,28 @@ function App() {
       setError('La edad debe ser mayor o igual a 18');
     } else {
       setError('');
+      setFormSubmitted(true);
     }
   };
 
   return (
-    <div className="App">
-      <h1>Formulario</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="form-control">
-          <label htmlFor="name">Nombre:</label>
-          <input type="text" id="name" value={name} onChange={handleNameChange} />
-        </div>
-        <div className="form-control">
-          <label htmlFor="age">Edad:</label>
-          <input type="number" id="age" value={age} onChange={handleAgeChange} />
-        </div>
-        <button type="submit">Enviar</button>
-      </form>
-      {error && <p className="error">{error}</p>}
-      {!error && name && age && <Card name={name} age={age} />}
+    <div className="root">
+      <div className="App">
+        <h1>Formulario</h1>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="name">Nombre:</label>
+            <input type="text" id="name" value={name} onChange={handleNameChange} />
+          </div>
+          <div>
+            <label htmlFor="age">Edad:</label>
+            <input type="number" id="age" value={age} onChange={handleAgeChange} />
+          </div>
+          <button type="submit">Enviar</button>
+        </form>
+        {error && <p>{error}</p>}
+        {formSubmitted && !error && <Card name={name} age={age} />}
+      </div>
     </div>
   );
 }
